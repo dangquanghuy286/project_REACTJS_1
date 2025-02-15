@@ -26,6 +26,10 @@ function ProductsList() {
                             <h4 className="product__title">{item.title}</h4>
                             <p className="products__price">{item.price}$</p>
                             <p className="products__discount">{item.discountPercentage}%</p>
+                            <button className="products__Button">
+                                <button className="products__ButtonDelete">Delete</button>
+                                <button className="products__ButtonEdit">Edit</button>
+                            </button>
                         </div>
                     ))
                 }
