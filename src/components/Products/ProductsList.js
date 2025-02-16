@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import "./Products.css";
-import { MdDeleteOutline } from "react-icons/md";
+
 // 
 import EditProduct from "./EditProduct";
+import DeleteProduct from "./DeleteProduct";
 
 function ProductsList(props) {
     // Lấy thuộc tính reload từ props
@@ -10,8 +11,10 @@ function ProductsList(props) {
     // Khai báo state data bằng hook useState
     const [data, setData] = useState([]);
     // Hiển thị data trong console
-    console.log(data);
-
+    const [editReload, setEditReload] = useState(false);
+    const handleReload = () => {
+        setEditReload(!editReload);
+    }
     // Sử dụng useEffect để fetch dữ liệu sản phẩm khi component được mount hoặc khi giá trị reload thay đổi
     useEffect(() => {
         const fetchApi = async () => {
@@ -22,7 +25,7 @@ function ProductsList(props) {
                 })
         }
         fetchApi();
-    }, [reload])
+    }, [reload, editReload])
 
     return (
         <>
@@ -42,11 +45,11 @@ function ProductsList(props) {
                             {/* Hiển thị phần trăm giảm giá */}
                             <p className="products__discount">{item.discountPercentage}%</p>
                             {/* Hiển thị các nút chức năng (Xóa và Chỉnh sửa) */}
+
                             <div className="products__Button">
-                                <button className="products__ButtonDelete">
-                                    <MdDeleteOutline /> Delete
-                                </button>
-                                <EditProduct item={item} />
+                                <EditProduct item={item} onReload={handleReload} />
+
+                                <DeleteProduct item={item} onReload={handleReload} />
 
 
                             </div>

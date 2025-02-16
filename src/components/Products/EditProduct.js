@@ -7,7 +7,7 @@ import 'sweetalert2/src/sweetalert2.scss'
 
 function EditProduct(props) {
     // Sử dụng destructuring để lấy onReload từ props
-    const { item } = props;
+    const { item, onReload } = props;
     // Hook useState để quản lý state
     const [ismodel, setModel] = useState(false);
     const [data, setData] = useState(item);
@@ -75,18 +75,19 @@ function EditProduct(props) {
             .then(data => {
                 if (data) {
                     setModel(false);
+                    onReload();
                     Swal.fire({
-                        title: "Bạn muốn lưu thông tin thay đổi?",
+                        title: "BẠN MUỐN CẬP NHÂT THÔNG TIN THAY ĐỔI?",
                         showDenyButton: true,
                         showCancelButton: true,
-                        confirmButtonText: "Save",
-                        denyButtonText: `Don't save`
+                        confirmButtonText: "LƯU",
+                        denyButtonText: `KHÔNG LƯU`
                     }).then((result) => {
                         /* Read more about isConfirmed, isDenied below */
                         if (result.isConfirmed) {
-                            Swal.fire("Saved!", "", "success");
+                            Swal.fire("THÀNH CÔNG", "", "success");
                         } else if (result.isDenied) {
-                            Swal.fire("Changes are not saved", "", "info");
+                            Swal.fire("KHÔNG LƯU THAY ĐỔI", "", "info");
                         }
                     });
                 }
