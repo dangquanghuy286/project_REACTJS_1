@@ -4,6 +4,7 @@ import "./Products.css";
 // 
 import EditProduct from "./EditProduct";
 import DeleteProduct from "./DeleteProduct";
+import { getProductList } from "../../services/productsService";
 
 function ProductsList(props) {
     // Lấy thuộc tính reload từ props
@@ -18,11 +19,8 @@ function ProductsList(props) {
     // Sử dụng useEffect để fetch dữ liệu sản phẩm khi component được mount hoặc khi giá trị reload thay đổi
     useEffect(() => {
         const fetchApi = async () => {
-            fetch("http://localhost:3002/products")
-                .then(res => res.json())
-                .then(data => {
-                    setData(data.reverse()); // Đảo ngược danh sách sản phẩm khi reload
-                })
+            const result = await getProductList();
+            setData(result.reverse()); // Đảo ngược danh sách sản phẩm khi reload
         }
         fetchApi();
     }, [reload, editReload])

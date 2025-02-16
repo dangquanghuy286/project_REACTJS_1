@@ -116,6 +116,23 @@
     background: darkblue;
 }
 
+.button__Create {
+    background: greenyellow;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    color: black;
+    margin-left: 20px;
+    transition: 0.3s ease;
+}
+
+.button__Create:hover {
+    background: rgb(31, 167, 60);
+    color: white;
+    transform: scale(1.1);
+}
+
 /* Responsive cho màn hình nhỏ */
 @media (max-width: 768px) {
     .products__Item {

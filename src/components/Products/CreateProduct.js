@@ -4,6 +4,8 @@ import Modal from 'react-modal';
 import { MdCancel } from "react-icons/md";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
+import { getCategoryList } from "../../services/cartegoryService";
+import { createProduct } from "../../services/productsService";
 
 function CreateProduct(props) {
     // Sử dụng destructuring để lấy onReload từ props
@@ -16,11 +18,8 @@ function CreateProduct(props) {
     // Hook useEffect để fetch dữ liệu danh mục khi component được mount
     useEffect(() => {
         const fetchApi = async () => {
-            fetch("http://localhost:3002/category")
-                .then(res => res.json())
-                .then(data => {
-                    setDataCategory(data)
-                })
+            const result = await getCategoryList();
+            setDataCategory(result)
         }
         fetchApi();
     }, [])
@@ -58,36 +57,27 @@ function CreateProduct(props) {
     }
 
     // Xử lý việc gửi form
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        const ketqua = await createProduct(data)
 
-        fetch("http://localhost:3002/products", {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data) {
-                    setModel(false);
-                    onReload();
-                    Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: "Tạo mới thành công!",
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
-                }
-            })
+        if (ketqua) {
+            setModel(false);
+            onReload();
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Tạo mới thành công!",
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+
     }
 
     return (
         <>
-            <button onClick={openModal}> <IoIosCreate /> Tạo mới sản phẩm</button>
+            <button className="button__Create" onClick={openModal}> <IoIosCreate /> Tạo mới sản phẩm</button>
             <Modal
                 isOpen={ismodel}
                 onRequestClose={closeModal}
