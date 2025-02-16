@@ -33,12 +33,13 @@
     aspect-ratio: 4/3;
     overflow: hidden;
     border-radius: 8px;
+
 }
 
 .products__Image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     transition: transform 0.3s ease;
 }
 
